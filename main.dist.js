@@ -30,17 +30,27 @@ var _map2 = _interopRequireDefault(_map);
 var game = new _makingGamesGame2["default"]();
 
 _map2["default"].forEach(function (object) {
-    if (object.type === "box") {
-        var sprite = null;
+    var sprite = null;
 
-        if (object.url) {
-            sprite = new PIXI.Sprite.fromImage(object.url);
-        }
-
-        var box = new _makingGamesBox2["default"](sprite, new PIXI.Rectangle(object.left, object.top, object.width, object.height));
-
-        game.addObject(box);
+    if (object.url) {
+        sprite = new PIXI.Sprite.fromImage(object.url);
     }
+
+    var rectangle = new PIXI.Rectangle(object.left, object.top, object.width, object.height);
+
+    if (object.type === "player") {
+        var actor = new _makingGamesPlayer2["default"](sprite, rectangle);
+    }
+
+    if (object.type === "ladder") {
+        var actor = new _makingGamesLadder2["default"](sprite, rectangle);
+    }
+
+    if (object.type === "box") {
+        var actor = new _makingGamesBox2["default"](sprite, rectangle);
+    }
+
+    game.addObject(actor);
 });
 
 game.addEventListenerToElement(window);
@@ -510,6 +520,7 @@ exports["default"] = [{
     "width": 64,
     "height": 128
 }, {
+    "type": "box",
     "left": 160,
     "top": 160,
     "url": "assets/room6.png",

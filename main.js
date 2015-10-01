@@ -8,28 +8,44 @@ import Map from "./map";
 var game = new Game();
 
 Map.forEach((object) => {
-    if (object.type === "box") {
-        var sprite = null;
+    var sprite = null;
 
-        if (object.url) {
-            sprite = new PIXI.Sprite.fromImage(
-                object.url
-            );
-        }
-
-        var box = new Box(
-            sprite,
-            new PIXI.Rectangle(
-                object.left,
-                object.top,
-                object.width,
-                object.height
-            )
-        )
-
-        game.addObject(box);
+    if (object.url) {
+        sprite = new PIXI.Sprite.fromImage(
+            object.url
+        );
     }
-})
+
+    var rectangle = new PIXI.Rectangle(
+        object.left,
+        object.top,
+        object.width,
+        object.height
+    );
+
+    if (object.type === "player") {
+        var actor = new Player(
+            sprite,
+            rectangle
+        );
+    }
+
+    if (object.type === "ladder") {
+        var actor = new Ladder(
+            sprite,
+            rectangle
+        );
+    }
+
+    if (object.type === "box") {
+        var actor = new Box(
+            sprite,
+            rectangle
+        );
+    }
+
+    game.addObject(actor);
+});
 
 game.addEventListenerToElement(window);
 game.addRendererToElement(document.body);

@@ -40,6 +40,7 @@ export default [
         "height": 128
     },
     {
+        "type": "box",
         "left": 160,
         "top": 160,
         "url": "assets/room6.png",
